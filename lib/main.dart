@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kwetter_app/api/auth.dart';
-import 'package:kwetter_app/home.dart';
-import 'package:kwetter_app/login.dart';
-import 'package:kwetter_app/user.dart';
+import 'package:kwetter_app/pages/home.dart';
+import 'package:kwetter_app/pages/login.dart';
+import 'package:kwetter_app/models/user.dart';
 
 void main() {
   runApp(new KwetterApp());

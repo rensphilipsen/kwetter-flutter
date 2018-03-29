@@ -5,20 +5,20 @@ import 'dart:io';
 import 'package:crypto/crypto.dart';
 import 'package:http/http.dart';
 import 'package:kwetter_app/api/base.dart';
-import 'package:kwetter_app/user.dart';
+import 'package:kwetter_app/models/user.dart';
 
 class AuthService extends BaseApiService {
+  String endpointPrefix = 'authentication';
+
   /// Get the current authenticated user
   ///
   /// Returns async User
   Future<User> getAuthenticatedUser() async {
-    Response response =
-        await super.get('authentication/me/' + await super.getToken());
-
-    if (response.statusCode == HttpStatus.OK) {
-      var user = json.decode(response.body);
-      return new User.fromJson(user);
-    }
+      Response response = await super.get(uri: 'me/' + await super.getToken());
+      if (response.statusCode == HttpStatus.OK) {
+        var user = json.decode(response.body);
+        return new User.fromJson(user);
+      }
     return null;
   }
 
@@ -36,8 +36,10 @@ class AuthService extends BaseApiService {
   ///
   /// Returns async User
   Future<User> login(String username, String password) async {
-    Response response = await super.post('authentication',
-        {"username": username.toLowerCase(), "password": hashPassword(password)});
+    Response response = await super.post(body: {
+      "username": username.toLowerCase(),
+      "password": hashPassword(password)
+    });
 
     if (response.statusCode == HttpStatus.OK) {
       var token = json.decode(response.body)['token'];

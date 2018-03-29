@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kwetter_app/api/kweets.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -6,16 +7,17 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
+  KweetService kweetService;
   List kweets;
 
   @override
   void initState() {
-//    apiService.getTimeline().then((data) {
-//      print(data);
-//      setState(() {
-//        kweets = data;
-//      });
-//    });
+    kweetService = new KweetService();
+    kweetService.getTimeline().then((data) {
+      setState(() {
+        kweets = data;
+      });
+    });
   }
 
   @override
