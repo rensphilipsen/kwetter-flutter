@@ -10,14 +10,15 @@ class KweetService extends BaseApiService {
   String endpointPrefix = 'kweets';
 
   Future<List<Kweet>> getTimeline() async {
-    List<Kweet> kweets;
+    List<Kweet> kweets = new List<Kweet>();
 
     Response response = await super.get(uri: '1/timeline/');
     if (response.statusCode == HttpStatus.OK) {
-      print(response.body);
-      var kweets = json.decode(response.body);
-      print(kweets);
-      print(kweets);
+      List<Object> kweetData = json.decode(response.body);
+      for (Object kweet in kweetData) {
+        var kwet = new Kweet.fromJson(kweet);
+        kweets.add(kwet);
+      }
     }
 
     return kweets;

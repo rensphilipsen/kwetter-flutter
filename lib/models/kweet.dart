@@ -13,7 +13,7 @@ class Kweet {
       id: json['id'],
       user: new User.fromJson(json['user']),
       text: json['text'],
-      date: json['date'],
+      date: json['date'].toString(),
     );
   }
 }

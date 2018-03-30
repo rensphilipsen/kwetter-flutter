@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kwetter_app/api/kweets.dart';
+import 'package:kwetter_app/models/kweet.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -8,7 +9,7 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   KweetService kweetService;
-  List kweets;
+  List<Kweet> kweets;
 
   @override
   void initState() {
@@ -31,10 +32,9 @@ class HomePageState extends State<HomePage> {
             children: <Widget>[
               new ListTile(
                 leading: new CircleAvatar(
-                    backgroundImage: new NetworkImage(
-                        kweets[index]['user']['profilePicture'])),
-                title: new Text(kweets[index]['user']['username']),
-                subtitle: new Text(kweets[index]['text']),
+                    backgroundImage: new NetworkImage(kweets[index].user.profilePicture)),
+                title: new Text(kweets[index].user.username),
+                subtitle: new Text(kweets[index].text),
               ),
               new ButtonTheme.bar(
                 // make buttons use the appropriate styles for cards
