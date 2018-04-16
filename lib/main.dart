@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:kwetter_app/api/auth.dart';
+import 'package:kwetter_app/models/user.dart';
 import 'package:kwetter_app/pages/home.dart';
 import 'package:kwetter_app/pages/login.dart';
-import 'package:kwetter_app/models/user.dart';
+import 'package:kwetter_app/pages/profile.dart';
 
 void main() {
   runApp(new KwetterApp());
@@ -20,12 +21,15 @@ class KwetterAppState extends State<KwetterApp> {
   Widget _screen;
   LoginPage _loginPage;
   HomePage _homePage;
+  ProfilePage _profilePage;
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   /// Constructor
   KwetterAppState() {
     authService = new AuthService();
     _loginPage = new LoginPage(onSubmit: onSubmit);
     _homePage = new HomePage();
+    _profilePage = new ProfilePage();
     _screen = _loginPage;
 
     // Check if the user is already authenticated
@@ -55,19 +59,38 @@ class KwetterAppState extends State<KwetterApp> {
     _setAuthenticated(null);
   }
 
+  void _toggleProfilePage() {
+    setState(() {
+      if (_screen == _profilePage) {
+        _screen = _homePage;
+        _title = 'Tijdlijn';
+      } else {
+        _screen = _profilePage;
+        _title = 'Mijn Profiel';
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: 'Kwetter',
       home: new Scaffold(
-          appBar: new AppBar(
-            title: new Text(_title),
-            actions: <Widget>[
-              new IconButton(
-                  icon: new Icon(Icons.exit_to_app), onPressed: _logOut)
-            ],
-          ),
-          body: _screen),
+        key: _scaffoldKey,
+        appBar: new AppBar(
+          title: new Text(_title),
+          leading: new IconButton(
+              icon: new Icon(Icons.exit_to_app), onPressed: _logOut),
+          actions: <Widget>[
+            new IconButton(
+              icon: new Icon(
+                  _screen == _profilePage ? Icons.home : Icons.account_circle),
+              onPressed: _toggleProfilePage,
+            ),
+          ],
+        ),
+        body: _screen,
+      ),
     );
   }
 }

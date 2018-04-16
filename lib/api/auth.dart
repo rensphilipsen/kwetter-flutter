@@ -5,6 +5,8 @@ import 'dart:io';
 import 'package:crypto/crypto.dart';
 import 'package:http/http.dart';
 import 'package:kwetter_app/api/base.dart';
+import 'package:kwetter_app/api/kweets.dart';
+import 'package:kwetter_app/api/users.dart';
 import 'package:kwetter_app/models/user.dart';
 
 class AuthService extends BaseApiService {
@@ -14,11 +16,17 @@ class AuthService extends BaseApiService {
   ///
   /// Returns async User
   Future<User> getAuthenticatedUser() async {
-      Response response = await super.get(uri: 'me/' + await super.getToken());
-      if (response.statusCode == HttpStatus.OK) {
-        var user = json.decode(response.body);
-        return new User.fromJson(user);
-      }
+    Response response = await super.get(uri: 'me/' + await super.getToken());
+    if (response.statusCode == HttpStatus.OK) {
+      var user = json.decode(response.body);
+      user = new User.fromJson(user);
+      var userService = new UserService();
+      var kweetService = new KweetService();
+      user.followers = await userService.getFollowers();
+      user.following = await userService.getFollowing();
+      user.kweets = await kweetService.getKweets();
+      return user;
+    }
     return null;
   }
 

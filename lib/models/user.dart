@@ -6,15 +6,19 @@ class User {
   final String location;
   final String website;
   final String bio;
+  var followers = [];
+  var following = [];
+  var kweets = [];
 
-  User(
-      {this.id,
-      this.username,
-      this.email,
-      this.profilePicture,
-      this.location,
-      this.website,
-      this.bio});
+  User({
+    this.id,
+    this.username,
+    this.email,
+    this.profilePicture,
+    this.location,
+    this.website,
+    this.bio,
+  });
 
   factory User.fromJson(Map<String, dynamic> json) {
     return new User(

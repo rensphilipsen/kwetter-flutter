@@ -22,7 +22,8 @@ abstract class BaseApiService {
   /// Do a POST request
   ///
   /// Returns a response
-  Future<http.Response> post({String uri = '', Map<String, dynamic> body}) async {
+  Future<http.Response> post(
+      {String uri = '', Map<String, dynamic> body}) async {
     final response = await http.post(_getUrl(uri), body: body);
     return response;
   }
@@ -30,7 +31,8 @@ abstract class BaseApiService {
   /// Do a UPDATE request
   ///
   /// Returns a response
-  Future<http.Response> update({String uri = '', Map<String, dynamic> body}) async {
+  Future<http.Response> update(
+      {String uri = '', Map<String, dynamic> body}) async {
     final response =
         await http.put(_getUrl(uri), body: body, headers: await _getHeaders());
     return response;

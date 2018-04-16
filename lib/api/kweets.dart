@@ -16,8 +16,21 @@ class KweetService extends BaseApiService {
     if (response.statusCode == HttpStatus.OK) {
       List<Object> kweetData = json.decode(response.body);
       for (Object kweet in kweetData) {
-        var kwet = new Kweet.fromJson(kweet);
-        kweets.add(kwet);
+        kweets.add(new Kweet.fromJson(kweet));
+      }
+    }
+
+    return kweets;
+  }
+
+  Future<List<Kweet>> getKweets() async {
+    List<Kweet> kweets = new List<Kweet>();
+
+    Response response = await super.get(uri: '1/kweets/');
+    if (response.statusCode == HttpStatus.OK) {
+      List<Object> kweetData = json.decode(response.body);
+      for (Object kweet in kweetData) {
+        kweets.add(new Kweet.fromJson(kweet));
       }
     }
 
