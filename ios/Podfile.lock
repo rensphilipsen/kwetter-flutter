@@ -1,21 +1,35 @@
 PODS:
   - Flutter (1.0.0)
+  - libPusher (1.6.3):
+    - libPusher/Core (= 1.6.3)
+  - libPusher/Core (1.6.3):
+    - SocketRocket (= 0.5.1)
+  - pusher_flutter (0.0.1):
+    - Flutter
+    - libPusher
   - shared_preferences (0.0.1):
     - Flutter
+  - SocketRocket (0.5.1)
 
 DEPENDENCIES:
   - Flutter (from `Pods/.symlinks/flutter/ios`)
+  - pusher_flutter (from `Pods/.symlinks/plugins/pusher_flutter-0.0.5/ios`)
   - shared_preferences (from `Pods/.symlinks/plugins/shared_preferences-0.4.0/ios`)
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Pods/.symlinks/flutter/ios
+  pusher_flutter:
+    :path: Pods/.symlinks/plugins/pusher_flutter-0.0.5/ios
   shared_preferences:
     :path: Pods/.symlinks/plugins/shared_preferences-0.4.0/ios
 
 SPEC CHECKSUMS:
   Flutter: 9d0fac939486c9aba2809b7982dfdbb47a7b0296
+  libPusher: b7fcf16e2db51c37915613652311d66065743ead
+  pusher_flutter: 5636329a29a5eed84d94623ee1195cf0e5088851
   shared_preferences: 5a1d487c427ee18fcd3ea1f2a131569481834b53
+  SocketRocket: d57c7159b83c3c6655745cd15302aa24b6bae531
 
 PODFILE CHECKSUM: 0420ab312a523ae0eecfb1fc19ea51dd82cc17c7
 

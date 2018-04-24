@@ -4,6 +4,7 @@ import 'package:kwetter_app/models/user.dart';
 import 'package:kwetter_app/pages/home.dart';
 import 'package:kwetter_app/pages/login.dart';
 import 'package:kwetter_app/pages/profile.dart';
+import 'package:pusher_flutter/pusher_flutter.dart';
 
 void main() {
   runApp(new KwetterApp());
@@ -23,6 +24,24 @@ class KwetterAppState extends State<KwetterApp> {
   HomePage _homePage;
   ProfilePage _profilePage;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+  PusherFlutter pusher =
+      new PusherFlutter("e2bb6e9dcc94497b2e16", cluster: "eu");
+
+  @override
+  initState() {
+    super.initState();
+
+    pusher.connect();
+
+    pusher.subscribe("new_kweet", "new_kweet");
+
+    pusher.onMessage.listen((pusher) {
+      setState(() {
+        createSnackBar(pusher.body['message']);
+      });
+    });
+  }
 
   /// Constructor
   KwetterAppState() {
@@ -69,6 +88,11 @@ class KwetterAppState extends State<KwetterApp> {
         _title = 'Mijn Profiel';
       }
     });
+  }
+
+  void createSnackBar(String message) {
+    final snackBar = new SnackBar(content: new Text(message));
+    _scaffoldKey.currentState.showSnackBar(snackBar);
   }
 
   @override
